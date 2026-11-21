@@ -430,6 +430,33 @@ def rect_stamp_layer(w, h, ink, lines):
     return layer
 
 
+def draw_guilloche(buf, x0, y0, x1, y1):
+    """Faint interlaced sine-wave security pattern, as on a real data page.
+
+    Drawn on the bare page before any content, so no text or stamp is
+    ever touched by it. Two families of waves (gold, then navy) at low
+    alpha: from a distance the page reads as printed security paper,
+    not flat cream.
+    """
+    import math as _math
+    for k in range(0, 26):
+        y_base = y0 + 14 + k * 26
+        if y_base > y1 - 8:
+            break
+        for x in range(x0 + 4, x1 - 4):
+            y = int(y_base + 5 * _math.sin((x - x0) / 47.0 + k * 0.9))
+            if y0 < y < y1:
+                blend(buf, x, y, (176, 148, 90), 0.10)
+    for k in range(0, 26):
+        y_base = y0 + 27 + k * 26
+        if y_base > y1 - 8:
+            break
+        for x in range(x0 + 4, x1 - 4):
+            y = int(y_base + 5 * _math.sin((x - x0) / 53.0 + k * 1.3 + 2.0))
+            if y0 < y < y1:
+                blend(buf, x, y, (38, 58, 110), 0.07)
+
+
 def field(buf, x, y, label, value, vscale=2):
     draw_text_left(buf, label, x, y, 1, FAINT)
     draw_text_left(buf, value, x, y + 10, vscale, INK)
@@ -460,6 +487,10 @@ def render():
     for x in range(500, 524):
         t = abs(x - 512) / 12.0
         fill_rect(buf, x, 148, x + 1, 876, mix((90, 84, 66), PAGE, t))
+
+    # security guilloche on both pages, under all content
+    draw_guilloche(buf, 56, 148, 500, 876)
+    draw_guilloche(buf, 524, 148, 968, 876)
 
     # ================= LEFT PAGE — data page =================
     # navy header band
@@ -546,12 +577,15 @@ def render():
     circle_stamp(buf, 856, 502, 72, STAMP_GREEN, [
         ("OSTARA", 2), ("ARRIVED", 2), ("02 FEB 2025", 2), ("VELDMAR", 2)])
     # departure stamp from Vardonia, rotated like a hand stamp
+    # (every departure follows an arrival in the same country: Kestrelia
+    # ARR 04 APR 2024, Vardonia ARR 19 SEP 2024, Ostara ARR 02 FEB 2025,
+    # Ostara DEP 27 MAY 2025 — no stamp contradicts the travel history)
     layer = rect_stamp_layer(280, 88, STAMP_BLUE, [
-        ("VARDONIA", 3), ("DEPARTED  19 SEP 2024", 2), ("KORVEST", 2)])
+        ("VARDONIA", 3), ("ARRIVED  19 SEP 2024", 2), ("KORVEST", 2)])
     blit_rotated(buf, layer, 640, 648, -13, 0.8)
-    # departure stamp from Kestrelia
+    # departure stamp from Ostara, closing the last trip
     circle_stamp(buf, 868, 660, 68, STAMP_BLUE, [
-        ("KESTRELIA", 2), ("DEPARTED", 2), ("27 MAY 2025", 2), ("TRELHAVN", 2)])
+        ("OSTARA", 2), ("DEPARTED", 2), ("27 MAY 2025", 2), ("VELDMAR", 2)])
     # small red fee stamp
     layer2 = rect_stamp_layer(150, 52, STAMP_RED, [
         ("FEE 40 AUR", 2), ("PAID", 2)])

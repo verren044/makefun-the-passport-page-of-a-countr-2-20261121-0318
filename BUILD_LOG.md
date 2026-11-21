@@ -58,3 +58,16 @@ invented Republic of Meridia and writes `/output/entry.png`:
 Built + committed locally. NOT pushed, NO GitHub repo created, NOT
 submitted — push/repo/submit are the parent agent's step (needs the
 browser session as verren044 and the kit bundle/check/submit flow).
+
+## Revision (parent, 21 Nov 2026 ~12:57 WIB, thinking_revised fix)
+- Added `draw_guilloche`: faint interlaced sine-wave security pattern on
+  both pages, drawn under all content — the spread now reads as printed
+  security paper, not flat cream (judge criterion 2).
+- Fixed travel history (judge criterion 3): every departure now follows an
+  arrival in the same country — Vardonia DEPARTED 19 SEP 2024 became
+  Vardonia ARRIVED 19 SEP 2024, and the final Kestrelia DEPARTED 27 MAY
+  2025 became Ostara DEPARTED 27 MAY 2025 (exit from Ostara, entered
+  02 FEB 2025). No stamp now contradicts the travel history.
+- Re-verified: two runs byte-identical, sha256
+  `09ecef7ca9aadc17a7fc34cf06f1d1f5928c49f8f7127694d4b01db4c2a23d5c`
+  (changed from builder sha `c1c56050…`), 1024x1024, within 1 MiB.
