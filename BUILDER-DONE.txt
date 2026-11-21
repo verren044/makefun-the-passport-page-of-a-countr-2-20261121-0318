@@ -1,0 +1,41 @@
+BUILDER-DONE — the-passport-page-of-a-countr-2-20261121-0318
+Built: Sat 21 Nov 2026 ~12:00 WIB (deadline 13:18 WIB)
+
+What was built
+---------------
+main.py (Python 3.13, stdlib only) draws an open passport spread for the
+invented Republic of Meridia and writes /output/entry.png:
+- Left (data) page: "REPUBLIC OF MERIDIA" navy band, gold shield+star
+  emblem, PASSPORT, type P / code MRD / No. MRD4829137, stylised portrait
+  of Elena Mara Voss (b. 14 JUN 1996, Port Aurelia), full data fields,
+  issue 12 MAR 2024 / expiry 11 MAR 2034, authority Ministry of the
+  Interior — Port Aurelia, holder's signature, ICAO MRZ with real 7-3-1
+  check digits (44 chars/line).
+- Right (visas) page: visitor-visa sticker (multiple entry, 90 days,
+  fee 40 AUR, employment not permitted), 4 stamps in travel order from
+  neighbours Kestrelia / Vardonia / Ostara (all dates after issue, before
+  expiry), red "FEE 40 AUR PAID" stamp, trilingual language column.
+
+Measurements
+------------
+- Dimensions: 1024 x 1024 (gate max 1024 x 1024) — OK
+- Size: 29,175 bytes (gate max 1,048,576) — OK
+- PNG signature valid; MRZ 44 + 44 chars
+- Runtime ~4 s/run (sandbox budget 60 s)
+
+Verification
+------------
+- Two runs, different output dirs (/tmp/out1, /tmp/out2): byte-identical
+- sha256: c1c560508ba228be077d5b336e2ea528dcec60d40d2efdc47367a74c0224c174
+- Rendered PNG visually inspected: coherent passport document, all text
+  legible, stamps inside rings, no overlaps
+
+Commit
+------
+- Local git commit: 547026e638fc8cff762d49ab55a9c01ef66742a0
+- Files: main.py, README.md (make.fun badges, verren044 /
+  makefun-the-passport-page-of-a-countr-2-20261121-0318), LICENSE (MIT),
+  BUILD_LOG.md, .makefun/owner.json
+
+NOT done (parent's step): no push, no GitHub repo created, no submit.
+Keypair file never read or printed.
